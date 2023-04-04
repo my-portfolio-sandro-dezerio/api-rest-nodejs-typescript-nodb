@@ -1,8 +1,13 @@
 import { IPersonBody } from "../people/interface";
 import Service from "../people/service";
 
-const service = new Service();
+let service: Service;
+
 const people_init: IPersonBody[] = [];
+
+beforeAll(() => {
+    service = new Service();
+})
 
 beforeEach(() => {
     people_init.length = 0;
@@ -25,79 +30,69 @@ afterEach(() => {
 });
 
 describe('PEOPLE - Services - Unit Testing', () => {
-    describe('GRID', () => {
-        test('Should return data', () => {
-            const people = service.grid();
-    
-            expect(people.length).toBe(people_init.length);
-        });
-    })
+    test('GRID - Should return data', () => {
+        const people = service.grid();
 
-    describe('GET BY ID', () => {
-        test('Should return data with valid id', () => {
-            const [ person ] = service.grid();
-
-            const person_by_id = service.getById(person.id);
-
-            expect(person_by_id!.id).toBe(person.id);
-        });
-
-        test('Should not return data with a not existing id', () => {
-            const person_by_id = service.getById('123');
-
-            expect(person_by_id).toBeUndefined;
-        });
+        expect(people.length).toBe(people_init.length);
     });
 
-    describe('CREATE', () => {
-        test('Should create a person', () => {
-            const payload = {
-                first_name: 'Sandro',
-                last_name: 'Dezerio',
-                email: 'sandro@gmail.com'
-            };
+    test('GET BY ID - Should return data with valid id', () => {
+        const [ person ] = service.grid();
 
-            const person = service.create(payload);
+        const person_by_id = service.getById(person.id);
 
-            expect(person.first_name).toBe(payload.first_name);
-            expect(person.last_name).toBe(payload.last_name);
-            expect(person.id).toBeTruthy();
-        });
+        expect(person_by_id!.id).toBe(person.id);
     });
 
-    describe('UPDATE' , () => {
-        test('Should update a person with a valid id', () => {
-            const people = service.grid();
+    test('GET BY ID - Should not return data with a not existing id', () => {
+        const person_by_id = service.getById('123');
 
-            const id = people[0].id;
-
-            const payload = {
-                first_name: 'Sandro modificado',
-                last_name: 'Dezerio modificado',
-                email: 'sandro@gmail.com'
-            };
-
-            service.update(id, payload);
-
-            const person = service.getById(id);
-
-            expect(person!.first_name).toBe(payload.first_name);
-            expect(person!.last_name).toBe(payload.last_name);
-            expect(person!.updated_at).toBeTruthy();
-        });
+        expect(person_by_id).toBeUndefined;
     });
 
-    describe('DELETE', () => {
-        test('Should delete a person', () => {
-            const people = service.grid();
+    test('CREATE - Should create a person', () => {
+        const payload = {
+            first_name: 'Sandro',
+            last_name: 'Dezerio',
+            email: 'sandro@gmail.com'
+        };
 
-            const id = people[0].id;
+        const person = service.create(payload);
 
-            service.delete(id);
+        expect(person.first_name).toBe(payload.first_name);
+        expect(person.last_name).toBe(payload.last_name);
+        expect(person.id).toBeTruthy();
+    });
 
-            const peopleWithoutDeleted = service.grid();
+    test('UPDATE - Should update a person with a valid id', () => {
+        const people = service.grid();
 
-            expect(peopleWithoutDeleted.length).toBe(people_init.length - 1);
-        });
+        const id = people[0].id;
+
+        const payload = {
+            first_name: 'Sandro modificado',
+            last_name: 'Dezerio modificado',
+            email: 'sandro@gmail.com'
+        };
+
+        service.update(id, payload);
+
+        const person = service.getById(id);
+
+        expect(person!.first_name).toBe(payload.first_name);
+        expect(person!.last_name).toBe(payload.last_name);
+        expect(person!.updated_at).toBeTruthy();
+    });
+
+    test('DELETE - Should delete a person', () => {
+        const people = service.grid();
+
+        const id = people[0].id;
+
+        service.delete(id);
+
+        const peopleWithoutDeleted = service.grid();
+
+        expect(peopleWithoutDeleted.length).toBe(people_init.length - 1);
     });
 });
