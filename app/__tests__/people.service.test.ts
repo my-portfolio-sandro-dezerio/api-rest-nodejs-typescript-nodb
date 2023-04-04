@@ -22,7 +22,7 @@ beforeEach(() => {
 
 afterEach(() => {
     service.clean();
-})
+});
 
 describe('PEOPLE - Services - Unit Testing', () => {
     describe('GRID', () => {
