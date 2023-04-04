@@ -1,11 +1,13 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@faker-js/faker': ^7.6.0
   '@types/body-parser': ^1.19.2
   '@types/cors': ^2.8.13
   '@types/jest': ^29.5.0
   '@types/morgan': ^1.9.4
   '@types/node': ^18.15.5
+  '@types/rosie': ^0.0.40
   '@types/supertest': ^2.0.12
   '@types/uuid': ^9.0.1
   body-parser: ^1.20.2
@@ -15,6 +17,7 @@ specifiers:
   jest: ^29.5.0
   morgan: ^1.10.0
   nodemon: ^2.0.22
+  rosie: ^2.1.0
   supertest: ^6.3.3
   ts-jest: ^29.1.0
   ts-node: ^10.9.1
@@ -31,15 +34,18 @@ dependencies:
   uuid: 9.0.0
 
 devDependencies:
+  '@faker-js/faker': 7.6.0
   '@types/body-parser': 1.19.2
   '@types/cors': 2.8.13
   '@types/jest': 29.5.0
   '@types/morgan': 1.9.4
   '@types/node': 18.15.5
+  '@types/rosie': 0.0.40
   '@types/supertest': 2.0.12
   '@types/uuid': 9.0.1
   jest: 29.5.0_757mb262zsxkcnuknwfdsckmku
   nodemon: 2.0.22
+  rosie: 2.1.0
   ts-jest: 29.1.0_44ttdtjaknnkcgzh5px4h2qxl4
   ts-node: 10.9.1_zlbzrxdj56n2qhafx752nt3nlm
   typescript: 5.0.2
@@ -392,6 +398,11 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+    dev: true
+
+  /@faker-js/faker/7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: true
 
   /@istanbuljs/load-nyc-config/1.1.0:
@@ -793,6 +804,10 @@ packages:
 
   /@types/prettier/2.7.2:
     resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
+    dev: true
+
+  /@types/rosie/0.0.40:
+    resolution: {integrity: sha512-Snog8oO88AXDhFG1BHPkKSg2urcGhyA+/fqQUuc4Abejt+HHrc2VszujyJGVBlN6DD8Gnp3PV5rogs3uYt/ZOA==}
     dev: true
 
   /@types/stack-utils/2.0.1:
@@ -2503,6 +2518,11 @@ packages:
       is-core-module: 2.11.0
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
+    dev: true
+
+  /rosie/2.1.0:
+    resolution: {integrity: sha512-Dbzdc+prLXZuB/suRptDnBUY29SdGvND3bLg6cll8n7PNqzuyCxSlRfrkn8PqjS9n4QVsiM7RCvxCkKAkTQRjA==}
+    engines: {node: '>=10'}
     dev: true
 
   /safe-buffer/5.1.2:

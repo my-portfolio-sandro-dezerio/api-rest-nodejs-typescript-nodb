@@ -1,27 +1,21 @@
 import { IPersonBody } from "../people/interface";
+import Factory from "../people/factory";
 import Service from "../people/service";
 
 let service: Service;
 
 const people_init: IPersonBody[] = [];
+let records_amount: number;
 
 beforeAll(() => {
     service = new Service();
+    records_amount = Math.floor(Math.random() * 50);
 })
 
 beforeEach(() => {
     people_init.length = 0;
 
-    people_init.push({
-        first_name: 'first name 1',
-        last_name: 'last name 1',
-        email: 'first@gmail.com'
-    }, {
-        first_name: 'first name 2',
-        last_name: 'last name 2',
-        email: 'second@gmail.com'
-    });
-
+    people_init.push(...Factory.buildList(records_amount));
     service.createMany(people_init);
 });
 
@@ -37,11 +31,12 @@ describe('PEOPLE - Services - Unit Testing', () => {
     });
 
     test('GET BY ID - Should return data with valid id', () => {
-        const [ person ] = service.grid();
+        const random_index = Math.floor(Math.random() * records_amount);
+        const people = service.grid();
 
-        const person_by_id = service.getById(person.id);
+        const person_by_id = service.getById(people[random_index].id);
 
-        expect(person_by_id!.id).toBe(person.id);
+        expect(person_by_id!.id).toBe(people[random_index].id);
     });
 
     test('GET BY ID - Should not return data with a not existing id', () => {
@@ -51,11 +46,7 @@ describe('PEOPLE - Services - Unit Testing', () => {
     });
 
     test('CREATE - Should create a person', () => {
-        const payload = {
-            first_name: 'Sandro',
-            last_name: 'Dezerio',
-            email: 'sandro@gmail.com'
-        };
+        const payload = Factory.build();
 
         const person = service.create(payload);
 
@@ -65,9 +56,11 @@ describe('PEOPLE - Services - Unit Testing', () => {
     });
 
     test('UPDATE - Should update a person with a valid id', () => {
+        const index = Math.floor(Math.random() * records_amount);
+
         const people = service.grid();
 
-        const id = people[0].id;
+        const id = people[index].id;
 
         const payload = {
             first_name: 'Sandro modificado',
@@ -85,9 +78,11 @@ describe('PEOPLE - Services - Unit Testing', () => {
     });
 
     test('DELETE - Should delete a person', () => {
+        const index = Math.floor(Math.random() * records_amount);
+
         const people = service.grid();
 
-        const id = people[0].id;
+        const id = people[index].id;
 
         service.delete(id);
 

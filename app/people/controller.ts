@@ -6,10 +6,7 @@ export default class Controller {
     service: Service = new Service();
 
     grid = (req: Request, res: Response, next: NextFunction) => {
-        const skip = Number(req.query.skip);
-        const take = Number(req.query.take);
-
-        const people: IPerson[] = this.service.grid(skip, take);
+        const people: IPerson[] = this.service.grid();
 
         return res.status(200).json(people);
     }

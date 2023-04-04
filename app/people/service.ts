@@ -4,8 +4,8 @@ import { v4 as uuid } from "uuid";
 let people: IPerson[] = [];
 
 export default class Service {
-    grid = (skip: number = 0, take: number = 5): IPerson[] => {
-        return people.slice(skip, skip + take);
+    grid = (): IPerson[] => {
+        return people;
     }
 
     getById = (id: string): IPerson | undefined => {
