@@ -6,7 +6,6 @@ import cors from 'cors';
 import config from './config';
 
 import PeopleRoutes from './people/routes';
-import NotesRoutes from './notes/routes';
 
 export default class Server {
     public app: Application;
@@ -33,7 +32,7 @@ export default class Server {
     }
 
     routes() {
-        const routes = [new PeopleRoutes(), new NotesRoutes()];
+        const routes = [new PeopleRoutes()];
 
         routes.forEach(route => {
             this.app.use(route.path, route.router)
