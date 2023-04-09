@@ -82,7 +82,4 @@ PORT=9000
     ```
 
 <h2> Contact Info: </h2>
-If you want to contact me, ask a question or concerns about my project you can find me on:
-
-- <a href='https://www.linkedin.com/in/sandro-dezerio/'>Linked In</a>
-- Gmail: sdezerio@gmail.com
+If you want to contact me, ask a question or concerns about my project you can find me on <a href='https://www.linkedin.com/in/sandro-dezerio/'>Linked In</a> or send me a <a href='mailto:sdezerio@gmail.com'>mail</a>.
