@@ -13,7 +13,7 @@ export default class Service {
     }
 
     getByEmail = (email: string): IPerson | undefined => {
-        return people.find(p => p.email === email);
+        return people.find(p =>  p.email === email);
     }
 
     create = (payload: IPersonBody): IPerson => {

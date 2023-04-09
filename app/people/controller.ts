@@ -27,25 +27,27 @@ export default class Controller {
         const person: IPerson | undefined = this.service.getByEmail(req.body.email);
 
         if(person) {
-            throw new Error('Email already exists.');
+            return res.status(400).json({ message: 'Email already exists.' });
         }
 
         const newPerson: IPerson = this.service.create(req.body);
 
-        return res.status(201).json(person);
+        return res.status(201).json(newPerson);
     }
 
     update = (req: Request, res: Response, next: NextFunction) => {
         const id = req.params.id;
-        const body = req.params.body as unknown as IPersonBody;
+        const body = req.body as unknown as IPersonBody;
 
         const person: IPerson | undefined = this.service.getById(id);
 
         if(!person) {
-            return res.status(400).json('Person trying to update doesn\'t exist.');
+            return res.status(400).json({ message: 'Person trying to update doesn\'t exist.' });
         }
 
         this.service.update(id, body);
+
+        return res.sendStatus(200);
     }
 
     delete = (req: Request, res: Response, next: NextFunction) => {
@@ -54,7 +56,7 @@ export default class Controller {
         const person: IPerson | undefined = this.service.getById(id);
 
         if(!person) {
-            return res.status(400).json('Person trying to delete doesn\'t exist.');
+            return res.status(400).json({ message: 'Person trying to delete doesn\'t exist.' });
         }
 
         this.service.delete(id);

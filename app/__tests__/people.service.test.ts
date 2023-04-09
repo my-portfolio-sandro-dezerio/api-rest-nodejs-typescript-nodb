@@ -9,7 +9,7 @@ let records_amount: number;
 
 beforeAll(() => {
     service = new Service();
-    records_amount = Math.floor(Math.random() * 50);
+    records_amount = Math.floor(Math.random() * 50) + 1;
 })
 
 beforeEach(() => {
@@ -31,12 +31,12 @@ describe('PEOPLE - Services - Unit Testing', () => {
     });
 
     test('GET BY ID - Should return data with valid id', () => {
-        const random_index = Math.floor(Math.random() * records_amount);
+        const index = Math.floor(Math.random() * records_amount);
         const people = service.grid();
 
-        const person_by_id = service.getById(people[random_index].id);
+        const person_by_id = service.getById(people[index].id);
 
-        expect(person_by_id!.id).toBe(people[random_index].id);
+        expect(person_by_id!.id).toBe(people[index].id);
     });
 
     test('GET BY ID - Should not return data with a not existing id', () => {

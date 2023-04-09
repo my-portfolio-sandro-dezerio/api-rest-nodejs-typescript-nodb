@@ -12,7 +12,7 @@ export default class Routes {
             .get('/', this.controller.grid)
             .get('/:id', this.controller.getById)
             .post('/', this.controller.create)
-            .put('/', this.controller.update)
-            .delete('/', this.controller.delete);
+            .put('/:id', this.controller.update)
+            .delete('/:id', this.controller.delete);
     }
 }
