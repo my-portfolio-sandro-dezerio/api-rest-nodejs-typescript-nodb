@@ -1,5 +1,5 @@
 import { IPersonBody } from "../people/interface";
-import Factory from "../people/factory";
+import { FactoryBuildFullObject } from "../people/factory";
 import Service from "../people/service";
 
 let service: Service;
@@ -15,7 +15,7 @@ beforeAll(() => {
 beforeEach(() => {
     people_init.length = 0;
 
-    people_init.push(...Factory.buildList(records_amount));
+    people_init.push(...FactoryBuildFullObject(records_amount));
     service.createMany(people_init);
 });
 
@@ -46,7 +46,7 @@ describe('PEOPLE - Services - Unit Testing', () => {
     });
 
     test('CREATE - Should create a person', () => {
-        const payload = Factory.build();
+        const [payload] = FactoryBuildFullObject();
 
         const person = service.create(payload);
 
@@ -62,11 +62,7 @@ describe('PEOPLE - Services - Unit Testing', () => {
 
         const id = people[index].id;
 
-        const payload = {
-            first_name: 'Sandro modificado',
-            last_name: 'Dezerio modificado',
-            email: 'sandro@gmail.com'
-        };
+        const [payload] = FactoryBuildFullObject();
 
         service.update(id, payload);
 

@@ -1,8 +1,9 @@
 import request from 'supertest';
 import Server from '../Server';
 import { Application } from 'express';
-import Factory from '../people/factory';
+import { FactoryBuildFullObject } from '../people/factory';
 import Service from '../people/service';
+import { IPerson } from '../people/interface';
 
 let server: Server;
 let service: Service;
@@ -22,7 +23,7 @@ afterAll(() => {
 
 describe('PEOPLE - Integration Test', () => {
     test('GRID - Should return data', async () => {
-        const people = Factory.buildList(records_amount);
+        const people = FactoryBuildFullObject(records_amount);
         service.createMany(people);
 
         const response = await request(app)
@@ -30,7 +31,8 @@ describe('PEOPLE - Integration Test', () => {
             .expect(200);
 
         expect(response.body.length).toEqual(people.length);
-        people.forEach(person => {
+
+        response.body.forEach((person: IPerson) => {
             expect(person.first_name).toBeDefined();
             expect(person.last_name).toBeDefined();
             expect(person.email).toBeDefined();
@@ -63,7 +65,7 @@ describe('PEOPLE - Integration Test', () => {
     });
 
     test('CREATE - Should create a person', async () => {
-        const payload = Factory.build();
+        const [payload] = FactoryBuildFullObject();
 
         const response = await request(app)
             .post(`/people`)
@@ -77,11 +79,11 @@ describe('PEOPLE - Integration Test', () => {
     });
 
     test('CREATE - Should not create a person with an email that already exists', async () => {
-        const person = Factory.build();
+        const [person] = FactoryBuildFullObject();
         service.create(person);
 
         const payload = {
-            ...Factory.build(),
+            ...FactoryBuildFullObject(),
             email: person.email
         }
 
@@ -96,7 +98,7 @@ describe('PEOPLE - Integration Test', () => {
     });
 
     test('UPDATE - Should update a person', async () => {
-        const peopleToCreate = Factory.buildList(records_amount);
+        const peopleToCreate = FactoryBuildFullObject(records_amount);
         service.createMany(peopleToCreate);
 
         const people = service.grid();
@@ -104,7 +106,7 @@ describe('PEOPLE - Integration Test', () => {
         const index = Math.floor(Math.random() * records_amount);
         
         const person = people[index];
-        const payload = Factory.build();
+        const [payload] = FactoryBuildFullObject();
 
         await request(app)
             .put(`/people/${person.id}`)
@@ -113,12 +115,10 @@ describe('PEOPLE - Integration Test', () => {
     });
 
     test('UPDATE - Should not update a person with an invalid id', async () => {
-        const peopleToCreate = Factory.build();
+        const [peopleToCreate] = FactoryBuildFullObject();
         service.create(peopleToCreate);
-
-        const [ person ] = service.grid();
         
-        const payload = Factory.build();
+        const [payload] = FactoryBuildFullObject();
 
         const response = await request(app)
             .put(`/people/123`)
@@ -131,7 +131,7 @@ describe('PEOPLE - Integration Test', () => {
     });
 
     test('DELETE - Should delete a person', async () => {
-        const peopleToCreate = Factory.buildList(records_amount);
+        const peopleToCreate = FactoryBuildFullObject(records_amount);
         service.createMany(peopleToCreate);
 
         const people = service.grid();

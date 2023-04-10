@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start:dev": "nodemon",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch ./app/__tests__/**.test.ts"
   },
   "keywords": [],
   "author": "",
